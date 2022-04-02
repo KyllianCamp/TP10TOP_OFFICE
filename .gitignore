@@ -1,0 +1,10 @@
+.DS_Store
+main
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log
+.vscode/tasks.json
+main.dSYM/Contents/Info.plist
+commandes/commande0001.txt
+commandes/commande0001.txt
+*.txt
