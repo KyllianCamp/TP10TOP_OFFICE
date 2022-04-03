@@ -203,6 +203,16 @@ void verifierStock()
 	rename("newStock.txt","stock.txt");
 }
 
+void initStock()
+{
+	FILE *f;
+	f = fopen("stock.txt","w");
+
+	fprintf(f,"123548796 100\n132547896 1000\n132658974 500\n132569874 850\n231546987 790\n231547896 1500\n213456987 2000\n231698547 5000\n321469785 150\n312589647 600\n312698547 1000\n321789654 1200");
+	fclose(f);
+	printf("Votre stock a bel et bien était rénitialisé !!!\n");
+}
+
 int lireProchaineCommande() //pour lire l'int contenu dans nextFact
 {
 	FILE *f;
@@ -271,6 +281,7 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 
 int main()
 {
+	char choix;
 	//creation d un fichier d'un seul int nommé nextFact et contenant l'int 1
 	// code à utiliser pour réinitialiser nextFact à 1 si besoin au cours du TP 
 	
@@ -279,13 +290,18 @@ int main()
 	fwrite(&N,1,sizeof(int),f);
 	fclose(f);
 
+	printf("Voulez vous réinitialiser le stock? (y/n)?");
+	scanf("%c",&choix);
+	if(choix=='y')
+	{
+		initStock();	
+	}
 	//PARTIE 1 du TP : sans Gestion de stock
 	lireLesCommandes(); //lecture de tous les fichiers commandeXXX.txt (fichiers non traités jusqu'ici)	
 	lireProduits();
 	//PARTIE 2 du TP : avec Gestion de stock
 	printf("\n------- PARTIE 2 -------\n");
 	//copiez coller votre travail précédent puis modifiez le  
-	//lireLesCommandes2(); 	
-
+	//lireLesCommandes2(); 
 	return 0;
 }
