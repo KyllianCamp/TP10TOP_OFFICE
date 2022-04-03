@@ -69,84 +69,139 @@ void lireCommande(FILE *commande,char *NNNN)
 
 	 	}
 
-		fprintf(facture, "%d %s (PU = %.2f€) :: %.2f€\n", qte , chaine , pu, qte*pu);
+		fprintf(facture, "%d %s (PU = %f€) :: %f€\n", qte , chaine , pu, qte*pu);
 		total = total + qte*pu;
 	} while (fgets(chaine, 80, commande) != NULL);
 	
-	fprintf(facture, "\n \t\tTotal = %.2f€", total);
+	fprintf(facture, "\n \t\tTotal = %f€", total);
 
 	fclose(commande);
 	fclose(prod);
 	fclose(facture);
 }
 
+void lireCommandeAvecStock(FILE *commande,char *NNNN)
+{
+	int ref = 0 , refcommande , refstock;
+	int qte ,qtestock;
+	float total = 0 ;
+	float pu;
 
-// void lireCommandeAvecStock(FILE *commande,char *NNNN)
-// {
-// 	int ref = 0 , refcommande , refstock;
-// 	int qte ,qtestock;
-// 	float total = 0 ;
-// 	float pu;
+	char chaine[50];
+	char produit[50];
+	char produit1[50];
+	char fac[50];
+	char testStock[50]="ToutCommande.txt";
 
-// 	char chaine[50];
-// 	char produit[50];
-// 	char produit1[50];
-// 	char fac[50] = "facture";
+	char nom[50];
 
-// 	char nom[50];
+	FILE *prod;
+	prod=fopen("produits.txt","r");
 
-// 	FILE *prod;
-// 	prod=fopen("produits.txt","r");
+	FILE *stock;
+	stock=fopen("stock.txt","r");
 
-// 	FILE *stock;
-// 	stock=fopen("stock.txt","r");
+	FILE *newstock = NULL;
+	newstock=fopen(testStock,"a");
 
-// 	FILE *newstock;
-// 	newstock=fopen("newstock.txt","w");
+	FILE *facture = NULL;
 
-// 	FILE *facture = NULL;
+	strcpy(fac,"./factures/facture");
+	strcat(fac,NNNN);
+	strcat(fac,".txt");
 
-// 	strcpy(fac,"./factures/facture");
-// 	strcat(fac,NNNN);
-// 	strcat(fac,".txt");
+	facture=fopen(fac,"w");
 
-// 	facture=fopen(fac,"w");
+	fread(&produit,50,0,commande);
+	fscanf(commande,"%s",nom);
 
-// 	fread(&produit,50,0,commande);
-// 	fscanf(commande,"%s",nom);
+	fprintf(facture, "Client : %s\n",nom);
+	if (prod!=NULL && stock!=NULL && newstock!=NULL && facture!=NULL)
+	{	
+		while(fscanf(commande ,"%d %d",&refcommande ,&qte)!=EOF)
+		{
+			fread(&produit,sizeof(int),0,commande);
+			fprintf(newstock, "%d %d \n",refcommande, qte);
 
-// 	fprintf(facture, "Client : %s\n",nom);
+			while(refcommande!=ref)
+			{
+				fread(&produit1,strlen(produit1),0,prod);
+				fscanf(prod,"%d %s %f",&ref,chaine,&pu);
 
-// 	do
-// 	{
-// 		fread(&produit,sizeof(int),0,commande);
-// 		fscanf(commande ,"%d %d",&refcommande ,&qte);
+			}
+			while(refstock!=ref)
+			{
+				fread(&produit1,strlen(produit1),0,stock);
+				fscanf(stock,"%d %d",&refstock,&qtestock);
+			}
+			
+			fprintf(facture, "%d %s (PU = %.2f€) :: %.2f€\n", qte , chaine , pu, qte*pu);
+			total = total + qte*pu;
+		}
+	}
+	fprintf(facture, "\n \t\tTotal = %.2f€", total);
 
-// 		while(refcommande!=ref)
-// 		{
-// 			fread(&produit1,strlen(produit1),0,prod);
-// 			fscanf(prod,"%d %s %f",&ref,chaine,&pu);
+	fclose(stock);
+	fclose(newstock);
+	fclose(commande);
+	fclose(prod);
+	fclose(facture);
+}
 
-// 	 	}
-// 		while(refstock!=ref)
-// 		{
-// 			fread(&produit1,strlen(produit1),0,stock);
-// 			fscanf(stock,"%d %d",&refstock,&qtestock);
-// 		}
-		
-// 		fprintf(newstock, "%d %d",ref ,qtestock-qte);
-// 		fprintf(facture, "%d %s (PU = %f€) :: %f€\n", qte , chaine , pu, qte*pu);
-// 		total = total + qte*pu;
-// 	} while (fgets(chaine, 80, commande) != NULL);
+void verifierStock()
+{
+	FILE *alerte = NULL;
+	alerte = fopen("alerte.txt","w");
 	
-// 	fprintf(facture, "\n \t\tTotal = %f€", total);
+	FILE *stock = NULL;
+	stock = fopen("stock.txt","r");
 
-// 	fclose(stock);
-// 	fclose(newstock);
-// 	fclose(commande);
-// 	fclose(prod);
-// 	fclose(facture);
-// }
+	FILE *newStock = NULL;
+	newStock = fopen("newStock.txt","w");
+
+		int ref = 0 , refcommande , refstock;
+		int qte ,qtestock;
+		int i = 0;
+		float total = 0 ;
+		float pu;
+		char chaine[50];
+		char produit[50];
+		char produit1[50];
+		char fac[50];
+		char testStock[50]="ToutCommande.txt";
+
+	while(fscanf(stock ,"%d %d",&refstock ,&qtestock)!= EOF)
+	{
+		FILE *commande = NULL;
+		commande = fopen("ToutCommande.txt","r");
+		fread(&produit,sizeof(int),0,commande);
+		while(fscanf(commande,"%d %d",&refcommande,&qte)!= EOF)
+			{
+				if (refstock == refcommande)
+				{
+					qtestock = qtestock-qte;
+				}
+				fread(&produit1,strlen(produit1),0,commande);
+			}
+		if (qtestock <= 0 )
+			{
+				i++;
+				fprintf(alerte,"pas de stock sur le produit : %d, qty : %d \n",refstock,qtestock);
+			}
+		fclose(commande);
+		fprintf(newStock,"%d %d \n",refstock,qtestock);
+	}
+	fclose(stock);
+	fclose(newStock);
+	fclose(alerte);
+	if (i==0)
+	{
+		remove("alerte.txt");
+	}
+	remove("ToutCommande.txt");
+	remove("stock.txt");
+	rename("newStock.txt","stock.txt");
+}
 
 int lireProchaineCommande() //pour lire l'int contenu dans nextFact
 {
@@ -173,7 +228,6 @@ void convertirNenChaine4(int N,char *N4) //convertit l'int N en une chaine de 4 
 	N4[0]=cm;N4[1]=cc;N4[2]=cd;N4[3]=cu;N4[4]='\0';
 }
 
-
 void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt avec XXXX démarrant à N
 {
 	FILE *ficCommande=NULL;
@@ -197,8 +251,8 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 		if (ficCommande!=NULL)
 			{ // le fichier commandeNNNN.txt existe
 				printf("\n fichier %s present",nomCommande);
-				lireCommande(ficCommande,NNNN); // à vous de coder cette fonction lors de ce TP9
-				// lireCommandeAvecStock(ficCommande,NNNN);
+				// lireCommande(ficCommande,NNNN); // à vous de coder cette fonction lors de ce TP9
+				lireCommandeAvecStock(ficCommande,NNNN);
 				fclose(ficCommande);
 			}
 		else
@@ -210,13 +264,10 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 				fclose(f);
 				FINI=1;			
 			}
-
 		N++;
 		}while(FINI==0);		
-
+	verifierStock();
 }
-
-
 
 int main()
 {
@@ -232,6 +283,7 @@ int main()
 	lireLesCommandes(); //lecture de tous les fichiers commandeXXX.txt (fichiers non traités jusqu'ici)	
 	lireProduits();
 	//PARTIE 2 du TP : avec Gestion de stock
+	printf("\n------- PARTIE 2 -------\n");
 	//copiez coller votre travail précédent puis modifiez le  
 	//lireLesCommandes2(); 	
 
