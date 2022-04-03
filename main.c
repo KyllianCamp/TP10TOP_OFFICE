@@ -20,7 +20,7 @@ void lireProduits()
 		fread(&produit,sizeof(int),0,f);
 		fscanf(f ,"%d %s %f",&ref,chaine,&pu);
 
-		printf("%d %s %f\n",ref,chaine,pu);
+		printf("%d %s %.2f\n",ref,chaine,pu);
 	} while (fgets(chaine, 80, f) != NULL);
 
 	fclose(f);
@@ -69,11 +69,11 @@ void lireCommande(FILE *commande,char *NNNN)
 
 	 	}
 
-		fprintf(facture, "%d %s (PU = %f€) :: %f€\n", qte , chaine , pu, qte*pu);
+		fprintf(facture, "%d %s (PU = %.2f€) :: %.2f€\n", qte , chaine , pu, qte*pu);
 		total = total + qte*pu;
 	} while (fgets(chaine, 80, commande) != NULL);
 	
-	fprintf(facture, "\n \t\tTotal = %f€", total);
+	fprintf(facture, "\n \t\tTotal = %.2f€", total);
 
 	fclose(commande);
 	fclose(prod);
