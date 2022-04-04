@@ -9,8 +9,8 @@ void lireProduits()
 {	
 	int ref;
 	float pu;
-	char chaine[50];
-	char produit[50];
+	char chaine[TAILLE];
+	char produit[TAILLE];
 
 	FILE *f;
 	f=fopen("produits.txt","r");
@@ -34,12 +34,12 @@ void lireCommande(FILE *commande,char *NNNN)
 	float total = 0 ;
 	float pu;
 
-	char chaine[50];
-	char produit[50];
-	char produit1[50];
-	char fac[50] = "facture";
+	char chaine[TAILLE];
+	char produit[TAILLE];
+	char produit1[TAILLE];
+	char fac[TAILLE] = "facture";
 
-	char nom[50];
+	char nom[TAILLE];
 
 	FILE *prod;
 	prod=fopen("produits.txt","r");
@@ -52,7 +52,7 @@ void lireCommande(FILE *commande,char *NNNN)
 
 	facture=fopen(fac,"w");
 
-	fread(&produit,50,0,commande);
+	fread(&produit,TAILLE,0,commande);
 	fscanf(commande,"%s",nom);
 
 	fprintf(facture, "Client : %s\n",nom);
@@ -87,13 +87,13 @@ void lireCommandeAvecStock(FILE *commande,char *NNNN)
 	float total = 0 ;
 	float pu;
 
-	char chaine[50];
-	char produit[50];
-	char produit1[50];
-	char fac[50];
-	char testStock[50]="ToutCommande.txt";
+	char chaine[TAILLE];
+	char produit[TAILLE];
+	char produit1[TAILLE];
+	char fac[TAILLE];
+	char testStock[TAILLE]="ToutCommande.txt";
 
-	char nom[50];
+	char nom[TAILLE];
 
 	FILE *prod;
 	prod=fopen("produits.txt","r");
@@ -112,7 +112,7 @@ void lireCommandeAvecStock(FILE *commande,char *NNNN)
 
 	facture=fopen(fac,"w");
 
-	fread(&produit,50,0,commande);
+	fread(&produit,TAILLE,0,commande);
 	fscanf(commande,"%s",nom);
 
 	fprintf(facture, "Client : %s\n",nom);
@@ -164,11 +164,11 @@ void verifierStock()
 		int i = 0;
 		float total = 0 ;
 		float pu;
-		char chaine[50];
-		char produit[50];
-		char produit1[50];
-		char fac[50];
-		char testStock[50]="ToutCommande.txt";
+		char chaine[TAILLE];
+		char produit[TAILLE];
+		char produit1[TAILLE];
+		char fac[TAILLE];
+		char testStock[TAILLE]="ToutCommande.txt";
 
 	while(fscanf(stock ,"%d %d",&refstock ,&qtestock)!= EOF)
 	{
