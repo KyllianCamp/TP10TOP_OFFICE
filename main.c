@@ -250,12 +250,12 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 		{
 		strcpy(nomCommande,"./commandes/commande");
 		convertirNenChaine4(N,NNNN); 
-		//printf("\n==>%s<==",NNNN);
+		printf("\n==>%s<==",NNNN);
 		ficCommande=NULL;
 		strcat(nomCommande,NNNN);
 		strcat(nomCommande,".txt");
 		
-		//printf("\n traitement de  %s",nomCommande);
+		printf("\n traitement de  %s",nomCommande);
 		
 		ficCommande=fopen(nomCommande,"rt");
 		if (ficCommande!=NULL)
