@@ -285,10 +285,10 @@ int main()
 	//creation d un fichier d'un seul int nommé nextFact et contenant l'int 1
 	// code à utiliser pour réinitialiser nextFact à 1 si besoin au cours du TP 
 	
-	FILE *f;int N=1;
-	f=fopen("nextFact","w");
-	fwrite(&N,1,sizeof(int),f);
-	fclose(f);
+	// FILE *f;int N=1;
+	// f=fopen("nextFact","w");
+	// fwrite(&N,1,sizeof(int),f);
+	// fclose(f);
 
 	printf("Voulez vous réinitialiser le stock? (y/n)?");
 	scanf("%c",&choix);
