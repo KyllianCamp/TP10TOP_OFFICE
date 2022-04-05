@@ -263,7 +263,8 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 				printf("\n fichier %s present",nomCommande);
 				// lireCommande(ficCommande,NNNN); // à vous de coder cette fonction lors de ce TP9
 				lireCommandeAvecStock(ficCommande,NNNN);
-				fclose(ficCommande);
+				fclose(ficCommande);	
+				verifierStock();
 			}
 		else
 			{
@@ -276,26 +277,34 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 			}
 		N++;
 		}while(FINI==0);		
-	verifierStock();
+
 }
 
 int main()
 {
-	char choix;
+	int choix;
+	char ch;
 	//creation d un fichier d'un seul int nommé nextFact et contenant l'int 1
 	// code à utiliser pour réinitialiser nextFact à 1 si besoin au cours du TP 
 	
-	// FILE *f;int N=1;
-	// f=fopen("nextFact","w");
-	// fwrite(&N,1,sizeof(int),f);
-	// fclose(f);
+	printf("Voulez vous remettre à 1 NextFact (y/n)? ");
+	scanf("%c",&ch);
+	if(ch =='y')
+	{
+		FILE *f;int N=1;
+		f=fopen("nextFact","w");
+		fwrite(&N,1,sizeof(int),f);
+		fclose(f);
+	}
 
-	printf("Voulez vous réinitialiser le stock? (y/n)?");
-	scanf("%c",&choix);
-	if(choix=='y')
+
+	printf("Voulez vous réinitialiser le stock? (1 pour oui/ 0 pour non)? ");
+	scanf("%d",&choix);
+	if(choix=='1')
 	{
 		initStock();	
 	}
+
 	//PARTIE 1 du TP : sans Gestion de stock
 	lireLesCommandes(); //lecture de tous les fichiers commandeXXX.txt (fichiers non traités jusqu'ici)	
 	lireProduits();
