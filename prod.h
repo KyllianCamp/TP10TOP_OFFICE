@@ -5,9 +5,9 @@
 
 typedef struct 
 {
-unsigned int reference;
-char libelle[TAILLE];
-float prixU;
+    unsigned int reference;
+    char libelle[TAILLE];
+    float prixU;
 } T_Produit;
 
 typedef T_Produit T_TableauDeProduits[ NB_MAX_PRODUITS];

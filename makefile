@@ -3,4 +3,5 @@ all : main.c
 
 clean :	
 	rm -f ./factures/*.txt
-	rm -f alerte.txt 
+	rm -f alerte.txt
+	rm -f main
