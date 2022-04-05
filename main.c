@@ -282,8 +282,9 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 
 int main()
 {
-	int choix;
-	char ch;
+	int choix=1;
+	char ch=' ';
+	char cho=' ';
 	//creation d un fichier d'un seul int nommé nextFact et contenant l'int 1
 	// code à utiliser pour réinitialiser nextFact à 1 si besoin au cours du TP 
 	
@@ -300,14 +301,23 @@ int main()
 
 	printf("Voulez vous réinitialiser le stock? (1 pour oui/ 0 pour non)? ");
 	scanf("%d",&choix);
-	if(choix=='1')
+	if(choix==1)
 	{
 		initStock();	
 	}
 
+
+	printf("Voulez vous voir le catalogue de produits. (yes/no)? ");
+	fgets()
+	fflush(stdin)
+	if(cho == 'y')
+	{
+		lireProduits();	
+	}
+
+
 	//PARTIE 1 du TP : sans Gestion de stock
 	lireLesCommandes(); //lecture de tous les fichiers commandeXXX.txt (fichiers non traités jusqu'ici)	
-	lireProduits();
 	//PARTIE 2 du TP : avec Gestion de stock
 	printf("\n------- PARTIE 2 -------\n");
 	//copiez coller votre travail précédent puis modifiez le  
